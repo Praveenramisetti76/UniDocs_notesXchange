@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const voteSchema = new mongoose.Schema({
   userId: {
@@ -21,4 +21,4 @@ const voteSchema = new mongoose.Schema({
 // Compound unique index to prevent duplicate votes per user per note
 voteSchema.index({ userId: 1, noteId: 1 }, { unique: true });
 
-module.exports = mongoose.model("Vote", voteSchema);
+export default mongoose.model("Vote", voteSchema);
