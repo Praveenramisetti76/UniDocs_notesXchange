@@ -7,6 +7,7 @@ import {
   getNoteById,
   deleteNote,
 } from "../controllers/noteController.js";
+import { voteNote, getMyVote } from "../controllers/voteController.js";
 
 const router = express.Router();
 
@@ -17,6 +18,14 @@ router.post("/upload", authMiddleware, upload.single("file"), uploadNote);
 // @route   GET /api/notes
 // @desc    Get all notes with filters & pagination
 router.get("/", getNotes);
+
+// @route   POST /api/notes/:id/vote
+// @desc    Upvote or downvote a note (protected)
+router.post("/:id/vote", authMiddleware, voteNote);
+
+// @route   GET /api/notes/:id/myvote
+// @desc    Get current user's vote on a note (protected)
+router.get("/:id/myvote", authMiddleware, getMyVote);
 
 // @route   GET /api/notes/:id
 // @desc    Get single note by ID
