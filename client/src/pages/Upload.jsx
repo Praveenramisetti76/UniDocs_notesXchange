@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -24,7 +25,6 @@ const Upload = () => {
   const [errors, setErrors] = useState({});
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -102,11 +102,11 @@ const Upload = () => {
         },
       });
 
-      setToast({ type: "success", message: "Notes uploaded successfully!" });
-      setTimeout(() => navigate("/"), 1500);
+      toast.success("Notes uploaded successfully!");
+      setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       const msg = err.response?.data?.message || "Upload failed. Please try again.";
-      setToast({ type: "error", message: msg });
+      toast.error(msg);
       setUploading(false);
       setProgress(0);
     }
@@ -127,31 +127,6 @@ const Upload = () => {
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
-      {/* Toast notification */}
-      {toast && (
-        <div
-          className={`fixed top-20 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-medium animate-[slideIn_0.3s_ease] ${
-            toast.type === "success"
-              ? "bg-emerald-500 text-white"
-              : "bg-red-500 text-white"
-          }`}
-          style={{ animation: "slideIn 0.3s ease" }}
-        >
-          <div className="flex items-center gap-2">
-            {toast.type === "success" ? (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            )}
-            {toast.message}
-          </div>
-        </div>
-      )}
-
       {/* Header */}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Upload Notes</h1>
@@ -369,7 +344,17 @@ const Upload = () => {
             disabled={uploading}
             className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-md shadow-primary-200 hover:shadow-lg disabled:opacity-50 transition-all cursor-pointer"
           >
-            {uploading ? "Uploading..." : "Upload Notes"}
+            {uploading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Uploading...
+              </span>
+            ) : (
+              "Upload Notes"
+            )}
           </button>
         </form>
       </div>

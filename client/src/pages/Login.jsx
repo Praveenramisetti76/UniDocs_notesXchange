@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -24,6 +25,7 @@ const Login = () => {
     try {
       const res = await axios.post(`${API_URL}/api/auth/login`, formData);
       login(res.data.user, res.data.token);
+      toast.success("Welcome back!");
       navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");

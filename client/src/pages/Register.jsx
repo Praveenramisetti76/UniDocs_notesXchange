@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -50,6 +51,7 @@ const Register = () => {
         password: formData.password,
       });
       login(res.data.user, res.data.token);
+      toast.success("Account created successfully!");
       navigate("/");
     } catch (err) {
       const errorData = err.response?.data;

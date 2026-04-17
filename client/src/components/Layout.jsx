@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
 const Layout = ({ children }) => {
@@ -20,6 +21,7 @@ const Layout = ({ children }) => {
 
   const handleLogout = () => {
     logout();
+    toast.success("Logged out successfully");
     navigate("/");
     setMobileMenuOpen(false);
   };

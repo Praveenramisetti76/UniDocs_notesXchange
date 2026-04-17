@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -17,7 +18,6 @@ const NoteDetail = () => {
   const [voting, setVoting] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [toast, setToast] = useState(null);
 
   // Fetch note
   useEffect(() => {
@@ -51,8 +51,7 @@ const NoteDetail = () => {
 
   const handleVote = async (voteType) => {
     if (!isAuthenticated) {
-      setToast({ type: "error", message: "Please log in to vote" });
-      setTimeout(() => setToast(null), 3000);
+      toast.error("Please log in to vote");
       return;
     }
 
@@ -65,10 +64,16 @@ const NoteDetail = () => {
         downvotes: res.data.downvotes,
       }));
       // Toggle logic: if same vote, remove; otherwise set new
-      setMyVote((prev) => (prev === voteType ? null : voteType));
+      const newVote = myVote === voteType ? null : voteType;
+      setMyVote(newVote);
+
+      if (newVote === null) {
+        toast.success("Vote removed");
+      } else {
+        toast.success(newVote === "upvote" ? "Upvoted!" : "Downvoted!");
+      }
     } catch (err) {
-      setToast({ type: "error", message: "Vote failed. Try again." });
-      setTimeout(() => setToast(null), 3000);
+      toast.error("Vote failed. Try again.");
     } finally {
       setVoting(false);
     }
@@ -78,11 +83,10 @@ const NoteDetail = () => {
     setDeleting(true);
     try {
       await axios.delete(`${API_URL}/api/notes/${id}`);
-      setToast({ type: "success", message: "Note deleted successfully" });
-      setTimeout(() => navigate("/"), 1200);
+      toast.success("Note deleted successfully");
+      setTimeout(() => navigate("/"), 800);
     } catch (err) {
-      setToast({ type: "error", message: "Failed to delete note" });
-      setTimeout(() => setToast(null), 3000);
+      toast.error("Failed to delete note");
       setDeleting(false);
       setShowDeleteConfirm(false);
     }
@@ -104,19 +108,49 @@ const NoteDetail = () => {
   // Loading skeleton
   if (loading) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 animate-pulse">
-        <div className="h-6 bg-gray-200 rounded-lg w-32 mb-6" />
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 space-y-6">
-          <div className="h-8 bg-gray-200 rounded-lg w-3/4" />
-          <div className="flex gap-2">
-            <div className="h-6 bg-gray-100 rounded-full w-16" />
-            <div className="h-6 bg-gray-100 rounded-full w-20" />
-            <div className="h-6 bg-gray-100 rounded-full w-14" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+        <div className="h-6 bg-gray-200 rounded-lg w-32 mb-6 animate-pulse" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 space-y-4 animate-pulse">
+              <div className="h-2 w-full bg-gray-200 rounded-full" />
+              <div className="h-7 bg-gray-200 rounded-lg w-3/4" />
+              <div className="flex gap-2">
+                <div className="h-6 bg-gray-100 rounded-full w-16" />
+                <div className="h-6 bg-gray-100 rounded-full w-20" />
+                <div className="h-6 bg-gray-100 rounded-full w-14" />
+              </div>
+              <div className="h-4 bg-gray-100 rounded w-48" />
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse">
+              <div className="p-4 border-b border-gray-100">
+                <div className="h-4 bg-gray-200 rounded w-16" />
+              </div>
+              <div className="p-4">
+                <div className="h-96 bg-gray-100 rounded-xl" />
+              </div>
+            </div>
           </div>
-          <div className="h-96 bg-gray-100 rounded-xl" />
-          <div className="flex gap-4">
-            <div className="h-10 bg-gray-100 rounded-xl w-24" />
-            <div className="h-10 bg-gray-100 rounded-xl w-24" />
+          <div className="space-y-6 animate-pulse">
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
+              <div className="h-4 bg-gray-200 rounded w-24" />
+              <div className="flex justify-center gap-6">
+                <div className="h-20 w-16 bg-gray-100 rounded-xl" />
+                <div className="h-8 w-8 bg-gray-100 rounded self-center" />
+                <div className="h-20 w-16 bg-gray-100 rounded-xl" />
+              </div>
+            </div>
+            <div className="bg-white rounded-2xl border border-gray-100 p-6 space-y-3">
+              <div className="h-4 bg-gray-200 rounded w-20" />
+              <div className="flex gap-3">
+                <div className="w-11 h-11 bg-gray-200 rounded-full" />
+                <div className="space-y-2 flex-1">
+                  <div className="h-4 bg-gray-200 rounded w-24" />
+                  <div className="h-3 bg-gray-100 rounded w-20" />
+                </div>
+              </div>
+            </div>
+            <div className="h-12 bg-gray-200 rounded-xl animate-pulse" />
           </div>
         </div>
       </div>
@@ -143,17 +177,6 @@ const NoteDetail = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
-      {/* Toast */}
-      {toast && (
-        <div
-          className={`fixed top-20 right-4 z-50 px-5 py-3 rounded-xl shadow-lg text-sm font-medium ${
-            toast.type === "success" ? "bg-emerald-500 text-white" : "bg-red-500 text-white"
-          }`}
-        >
-          {toast.message}
-        </div>
-      )}
-
       {/* Delete confirmation modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
@@ -173,7 +196,17 @@ const NoteDetail = () => {
                 disabled={deleting}
                 className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 disabled:opacity-50 transition-all cursor-pointer"
               >
-                {deleting ? "Deleting..." : "Delete"}
+                {deleting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Deleting...
+                  </span>
+                ) : (
+                  "Delete"
+                )}
               </button>
             </div>
           </div>
