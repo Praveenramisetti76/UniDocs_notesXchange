@@ -268,14 +268,7 @@ const Upload = () => {
                   <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
                     dragActive ? "bg-primary-100" : "bg-gray-100"
                   }`}>
-                    <svg
-                      className={`w-7 h-7 ${dragActive ? "text-primary-500" : "text-gray-400"}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
+                    <span className={`text-3xl ${dragActive ? "opacity-80" : "opacity-50"}`}>☁️</span>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-700">
@@ -289,19 +282,11 @@ const Upload = () => {
               /* Selected file preview */
               <div className="flex items-center gap-4 p-4 rounded-2xl border border-gray-200 bg-gray-50">
                 <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold ${
                     isPdf ? "bg-red-50 text-red-500" : "bg-emerald-50 text-emerald-500"
                   }`}
                 >
-                  {isPdf ? (
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
-                    </svg>
-                  ) : (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  )}
+                  {isPdf ? "PDF" : "IMG"}
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-gray-700 truncate">{file.name}</p>
@@ -310,11 +295,9 @@ const Upload = () => {
                 <button
                   type="button"
                   onClick={removeFile}
-                  className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all cursor-pointer"
+                  className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all cursor-pointer text-lg font-bold"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
+                  ✕
                 </button>
               </div>
             )}
@@ -346,10 +329,7 @@ const Upload = () => {
           >
             {uploading ? (
               <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" />
                 Uploading...
               </span>
             ) : (

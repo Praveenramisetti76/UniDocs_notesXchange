@@ -24,26 +24,17 @@ const NoteCard = ({ note }) => {
       />
 
       <div className="p-5 flex flex-col flex-1">
-        {/* Header: file icon + title */}
+        {/* Header: file type badge + title */}
         <div className="flex items-start gap-3 mb-3">
-          {/* File type icon */}
+          {/* File type badge — text-based */}
           <div
-            className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
+            className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold ${
               isPdf
                 ? "bg-red-50 text-red-500"
                 : "bg-emerald-50 text-emerald-500"
             }`}
           >
-            {isPdf ? (
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM6 20V4h7v5h5v11H6z" />
-                <path d="M8 12h2v2H8v3h2v-1h1v1a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm5 0h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-1v2h-1v-6zm1 3h1v-2h-1v2z" />
-              </svg>
-            ) : (
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            )}
+            {isPdf ? "PDF" : "IMG"}
           </div>
 
           <div className="min-w-0 flex-1">
@@ -93,15 +84,11 @@ const NoteCard = ({ note }) => {
           {/* Vote count */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
-              <svg className="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M2 20h2c.55 0 1-.45 1-1v-9c0-.55-.45-1-1-1H2v11zm19.83-7.12c.11-.25.17-.52.17-.8V11c0-1.1-.9-2-2-2h-5.5l.92-4.65c.05-.22.02-.46-.08-.66-.23-.45-.52-.86-.88-1.22L14 2 7.59 8.41C7.21 8.79 7 9.3 7 9.83v7.84C7 18.95 8.05 20 9.34 20h8.11c.7 0 1.36-.37 1.72-.97l2.66-6.15z" />
-              </svg>
+              <span className="text-sm font-bold text-emerald-500">▲</span>
               <span className="text-xs font-medium text-emerald-600">{note.upvotes || 0}</span>
             </div>
             <div className="flex items-center gap-1">
-              <svg className="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22 4h-2c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h2V4zM2.17 11.12c-.11.25-.17.52-.17.8V13c0 1.1.9 2 2 2h5.5l-.92 4.65c-.05.22-.02.46.08.66.23.45.52.86.88 1.22L10 22l6.41-6.41c.38-.38.59-.89.59-1.42V6.34C17 5.05 15.95 4 14.66 4h-8.1c-.71 0-1.36.37-1.72.97L2.17 11.12z" />
-              </svg>
+              <span className="text-sm font-bold text-red-400">▼</span>
               <span className="text-xs font-medium text-red-500">{note.downvotes || 0}</span>
             </div>
             <span

@@ -4,6 +4,8 @@ import { AuthProvider } from "./context/AuthContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AuthRoute from "./components/AuthRoute";
+import LandingPage from "./pages/LandingPage";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -50,7 +52,15 @@ function App() {
           />
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
+              {/* Landing page for unauthenticated, Browse notes for authenticated */}
+              <Route
+                path="/"
+                element={
+                  <AuthRoute>
+                    <Home />
+                  </AuthRoute>
+                }
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route
@@ -61,7 +71,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/notes/:id" element={<NoteDetail />} />
+              <Route
+                path="/notes/:id"
+                element={
+                  <ProtectedRoute>
+                    <NoteDetail />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>

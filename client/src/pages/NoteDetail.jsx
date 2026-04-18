@@ -162,9 +162,7 @@ const NoteDetail = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
         <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-2xl flex items-center justify-center">
-          <svg className="w-10 h-10 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
+          <span className="text-3xl">⚠️</span>
         </div>
         <h2 className="text-xl font-semibold text-gray-700 mb-2">Something went wrong</h2>
         <p className="text-sm text-gray-400 mb-6">{error}</p>
@@ -198,10 +196,7 @@ const NoteDetail = () => {
               >
                 {deleting ? (
                   <span className="flex items-center justify-center gap-2">
-                    <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                    </svg>
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin inline-block" />
                     Deleting...
                   </span>
                 ) : (
@@ -218,9 +213,7 @@ const NoteDetail = () => {
         to="/"
         className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary-600 transition-colors mb-6"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
+        <span className="text-lg leading-none">←</span>
         Back to notes
       </Link>
 
@@ -314,9 +307,7 @@ const NoteDetail = () => {
                     : "bg-gray-50 border-2 border-transparent hover:border-emerald-200 hover:bg-emerald-50 text-gray-400 hover:text-emerald-500"
                 }`}
               >
-                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M2 20h2c.55 0 1-.45 1-1v-9c0-.55-.45-1-1-1H2v11zm19.83-7.12c.11-.25.17-.52.17-.8V11c0-1.1-.9-2-2-2h-5.5l.92-4.65c.05-.22.02-.46-.08-.66-.23-.45-.52-.86-.88-1.22L14 2 7.59 8.41C7.21 8.79 7 9.3 7 9.83v7.84C7 18.95 8.05 20 9.34 20h8.11c.7 0 1.36-.37 1.72-.97l2.66-6.15z" />
-                </svg>
+                <span className="text-2xl font-bold leading-none">▲</span>
                 <span className="text-lg font-bold">{note.upvotes || 0}</span>
               </button>
 
@@ -344,9 +335,7 @@ const NoteDetail = () => {
                     : "bg-gray-50 border-2 border-transparent hover:border-red-200 hover:bg-red-50 text-gray-400 hover:text-red-500"
                 }`}
               >
-                <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22 4h-2c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h2V4zM2.17 11.12c-.11.25-.17.52-.17.8V13c0 1.1.9 2 2 2h5.5l-.92 4.65c-.05.22-.02.46.08.66.23.45.52.86.88 1.22L10 22l6.41-6.41c.38-.38.59-.89.59-1.42V6.34C17 5.05 15.95 4 14.66 4h-8.1c-.71 0-1.36.37-1.72.97L2.17 11.12z" />
-                </svg>
+                <span className="text-2xl font-bold leading-none">▼</span>
                 <span className="text-lg font-bold">{note.downvotes || 0}</span>
               </button>
             </div>
@@ -383,9 +372,7 @@ const NoteDetail = () => {
               download
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-md shadow-primary-200 hover:shadow-lg transition-all"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
+              <span className="text-base">⬇</span>
               Download
             </a>
 
@@ -394,9 +381,7 @@ const NoteDetail = () => {
                 onClick={() => setShowDeleteConfirm(true)}
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-medium text-red-600 border-2 border-red-200 hover:bg-red-50 transition-all cursor-pointer"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
+                <span className="text-base">🗑</span>
                 Delete Note
               </button>
             )}
