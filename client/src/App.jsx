@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Upload from "./pages/Upload";
 import NoteDetail from "./pages/NoteDetail";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 function App() {
@@ -76,6 +77,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <NoteDetail />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
                   </ProtectedRoute>
                 }
               />

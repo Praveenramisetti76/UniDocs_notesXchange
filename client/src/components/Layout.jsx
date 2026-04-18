@@ -98,14 +98,22 @@ const Layout = ({ children }) => {
 
               {isAuthenticated ? (
                 <div className="flex items-center gap-3 ml-3 pl-3 border-l border-gray-200">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-semibold shadow-sm">
-                      {user?.name?.charAt(0).toUpperCase()}
-                    </div>
+                  <Link to="/profile" className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-gray-100 transition-all">
+                    {user?.profilePhoto ? (
+                      <img
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
+                        alt={user?.name}
+                        className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-primary-200"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-semibold shadow-sm">
+                        {user?.name?.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                     <span className="text-sm font-medium text-gray-700 hidden lg:block">
                       {user?.name}
                     </span>
-                  </div>
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="px-3 py-1.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-all cursor-pointer"
@@ -184,12 +192,31 @@ const Layout = ({ children }) => {
               <div className="pt-2 border-t border-gray-100">
                 {isAuthenticated ? (
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 px-4 py-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-semibold">
-                        {user?.name?.charAt(0).toUpperCase()}
-                      </div>
+                    <Link
+                      to="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-all"
+                    >
+                      {user?.profilePhoto ? (
+                        <img
+                          src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
+                          alt={user?.name}
+                          className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-primary-200"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white text-sm font-semibold">
+                          {user?.name?.charAt(0).toUpperCase()}
+                        </div>
+                      )}
                       <span className="text-sm font-medium text-gray-700">{user?.name}</span>
-                    </div>
+                    </Link>
+                    <Link
+                      to="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block px-4 py-2.5 rounded-lg text-sm font-medium text-primary-600 hover:bg-primary-50 transition-all"
+                    >
+                      My Profile
+                    </Link>
                     <button
                       onClick={handleLogout}
                       className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-all cursor-pointer"
