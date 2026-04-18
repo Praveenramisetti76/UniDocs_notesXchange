@@ -52,6 +52,9 @@ export const register = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        bio: user.bio,
+        college: user.college,
+        profilePhoto: user.profilePhoto,
         createdAt: user.createdAt,
       },
     });
@@ -96,6 +99,9 @@ export const login = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
+        bio: user.bio,
+        college: user.college,
+        profilePhoto: user.profilePhoto,
         createdAt: user.createdAt,
       },
     });
