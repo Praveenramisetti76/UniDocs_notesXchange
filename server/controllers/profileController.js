@@ -1,4 +1,18 @@
+import cloudinary from "../config/cloudinary.js";
 import User from "../models/User.js";
+
+// Helper: extract Cloudinary public_id from a URL
+const getPublicIdFromUrl = (url) => {
+  try {
+    const parts = url.split("/upload/");
+    if (parts.length < 2) return null;
+    const afterUpload = parts[1].replace(/^v\d+\//, "");
+    // Remove file extension for images
+    return afterUpload.replace(/\.[^/.]+$/, "");
+  } catch {
+    return null;
+  }
+};
 
 // @route   GET /api/profile/me
 // @desc    Get current user's profile
@@ -68,11 +82,27 @@ export const updateProfilePhoto = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const photoPath = `/uploads/${req.file.filename}`;
+    // Delete old profile photo from Cloudinary if it exists
+    const currentUser = await User.findById(req.user.id);
+    if (currentUser?.profilePhoto) {
+      try {
+        const oldPublicId = getPublicIdFromUrl(currentUser.profilePhoto);
+        if (oldPublicId) {
+          await cloudinary.uploader.destroy(oldPublicId, {
+            resource_type: "image",
+          });
+        }
+      } catch (cleanupErr) {
+        console.error("Old photo cleanup error:", cleanupErr.message);
+      }
+    }
+
+    // req.file.path contains the full Cloudinary URL
+    const photoUrl = req.file.path;
 
     const user = await User.findByIdAndUpdate(
       req.user.id,
-      { profilePhoto: photoPath },
+      { profilePhoto: photoUrl },
       { new: true }
     ).select("-password");
 

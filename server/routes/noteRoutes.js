@@ -1,6 +1,6 @@
 import express from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
-import upload from "../middlewares/upload.js";
+import { uploadNote as uploadMiddleware } from "../middlewares/upload.js";
 import {
   uploadNote,
   getNotes,
@@ -13,7 +13,7 @@ const router = express.Router();
 
 // @route   POST /api/notes/upload
 // @desc    Upload a new note (protected)
-router.post("/upload", authMiddleware, upload.single("file"), uploadNote);
+router.post("/upload", authMiddleware, uploadMiddleware.single("file"), uploadNote);
 
 // @route   GET /api/notes
 // @desc    Get all notes with filters & pagination

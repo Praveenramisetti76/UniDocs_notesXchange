@@ -1,6 +1,21 @@
-import fs from "fs";
-import path from "path";
+import cloudinary from "../config/cloudinary.js";
 import Note from "../models/Note.js";
+
+// Helper: extract Cloudinary public_id from a URL
+const getPublicIdFromUrl = (url) => {
+  try {
+    // Cloudinary URLs look like:
+    // https://res.cloudinary.com/<cloud>/image/upload/v123/unidocs/notes/filename.jpg
+    // https://res.cloudinary.com/<cloud>/raw/upload/v123/unidocs/notes/filename.pdf
+    const parts = url.split("/upload/");
+    if (parts.length < 2) return null;
+    // Remove the version prefix (v123456789/) and file extension for images
+    const afterUpload = parts[1].replace(/^v\d+\//, "");
+    return afterUpload;
+  } catch {
+    return null;
+  }
+};
 
 // @route   POST /api/notes/upload
 // @desc    Upload a new note
@@ -15,8 +30,16 @@ export const uploadNote = async (req, res) => {
 
     // Validate required fields
     if (!title || !subject || !semester || !branch) {
-      // Remove uploaded file if validation fails
-      fs.unlinkSync(req.file.path);
+      // If validation fails, try to remove the already-uploaded Cloudinary file
+      if (req.file.path) {
+        const publicId = getPublicIdFromUrl(req.file.path);
+        if (publicId) {
+          const isPdf = req.file.mimetype === "application/pdf";
+          await cloudinary.uploader.destroy(publicId, {
+            resource_type: isPdf ? "raw" : "image",
+          });
+        }
+      }
       return res.status(400).json({
         message: "Title, subject, semester, and branch are required",
       });
@@ -25,13 +48,14 @@ export const uploadNote = async (req, res) => {
     // Determine file type from mimetype
     const fileType = req.file.mimetype === "application/pdf" ? "pdf" : "image";
 
+    // req.file.path contains the full Cloudinary URL
     const note = await Note.create({
       title,
       subject,
       subjectCode: subjectCode || "",
       semester: Number(semester),
       branch,
-      fileUrl: `/uploads/${req.file.filename}`,
+      fileUrl: req.file.path,
       fileType,
       uploadedBy: req.user.id,
     });
@@ -40,9 +64,19 @@ export const uploadNote = async (req, res) => {
 
     res.status(201).json(populated);
   } catch (error) {
-    // Clean up file on error
-    if (req.file) {
-      fs.unlinkSync(req.file.path);
+    // Clean up Cloudinary file on error
+    if (req.file && req.file.path) {
+      try {
+        const publicId = getPublicIdFromUrl(req.file.path);
+        if (publicId) {
+          const isPdf = req.file.mimetype === "application/pdf";
+          await cloudinary.uploader.destroy(publicId, {
+            resource_type: isPdf ? "raw" : "image",
+          });
+        }
+      } catch (cleanupErr) {
+        console.error("Cleanup error:", cleanupErr.message);
+      }
     }
     console.error("Upload error:", error.message);
     res.status(500).json({ message: "Server error" });
@@ -120,10 +154,19 @@ export const deleteNote = async (req, res) => {
       return res.status(403).json({ message: "Not authorized to delete this note" });
     }
 
-    // Remove file from disk
-    const filePath = path.join("uploads", path.basename(note.fileUrl));
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+    // Remove file from Cloudinary
+    if (note.fileUrl) {
+      try {
+        const publicId = getPublicIdFromUrl(note.fileUrl);
+        if (publicId) {
+          const resourceType = note.fileType === "pdf" ? "raw" : "image";
+          await cloudinary.uploader.destroy(publicId, {
+            resource_type: resourceType,
+          });
+        }
+      } catch (cloudErr) {
+        console.error("Cloudinary delete error:", cloudErr.message);
+      }
     }
 
     await Note.findByIdAndDelete(req.params.id);

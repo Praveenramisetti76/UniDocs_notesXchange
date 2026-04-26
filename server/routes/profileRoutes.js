@@ -1,10 +1,10 @@
 import express from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
-import upload from "../middlewares/upload.js";
+import { uploadProfilePhoto } from "../middlewares/upload.js";
 import {
   getProfile,
   updateProfile,
-  updateProfilePhoto,
+  updateProfilePhoto as updateProfilePhotoController,
 } from "../controllers/profileController.js";
 
 const router = express.Router();
@@ -19,6 +19,6 @@ router.put("/me", authMiddleware, updateProfile);
 
 // @route   PUT /api/profile/photo
 // @desc    Upload / update profile photo
-router.put("/photo", authMiddleware, upload.single("photo"), updateProfilePhoto);
+router.put("/photo", authMiddleware, uploadProfilePhoto.single("photo"), updateProfilePhotoController);
 
 export default router;
