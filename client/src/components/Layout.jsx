@@ -101,7 +101,7 @@ const Layout = ({ children }) => {
                   <Link to="/profile" className="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-gray-100 transition-all">
                     {user?.profilePhoto ? (
                       <img
-                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
+                        src={user.profilePhoto.startsWith("http") ? user.profilePhoto : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
                         alt={user?.name}
                         className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-primary-200"
                       />
@@ -199,7 +199,7 @@ const Layout = ({ children }) => {
                     >
                       {user?.profilePhoto ? (
                         <img
-                          src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
+                          src={user.profilePhoto.startsWith("http") ? user.profilePhoto : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
                           alt={user?.name}
                           className="w-8 h-8 rounded-full object-cover shadow-sm ring-2 ring-primary-200"
                         />

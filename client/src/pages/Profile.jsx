@@ -31,7 +31,7 @@ const Profile = () => {
           bio: u.bio || "",
           college: u.college || "",
         });
-        setPhotoPreview(u.profilePhoto ? `${API}${u.profilePhoto}` : null);
+        setPhotoPreview(u.profilePhoto ? (u.profilePhoto.startsWith("http") ? u.profilePhoto : `${API}${u.profilePhoto}`) : null);
         updateUser({
           id: u._id,
           name: u.name,
@@ -51,7 +51,7 @@ const Profile = () => {
             college: user.college || "",
           });
           setPhotoPreview(
-            user.profilePhoto ? `${API}${user.profilePhoto}` : null
+            user.profilePhoto ? (user.profilePhoto.startsWith("http") ? user.profilePhoto : `${API}${user.profilePhoto}`) : null
           );
         }
       } finally {
@@ -113,7 +113,7 @@ const Profile = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       const u = res.data.user;
-      setPhotoPreview(`${API}${u.profilePhoto}`);
+      setPhotoPreview(u.profilePhoto.startsWith("http") ? u.profilePhoto : `${API}${u.profilePhoto}`);
       updateUser(u);
       toast.success("Photo updated!");
     } catch (err) {

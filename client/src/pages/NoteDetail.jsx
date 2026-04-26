@@ -94,7 +94,13 @@ const NoteDetail = () => {
 
   const isOwner = user && note?.uploadedBy?._id === user.id;
   const isPdf = note?.fileType === "pdf";
-  const fileUrl = note ? `${API_URL}${note.fileUrl}` : "";
+  const fileUrl = note
+    ? note.fileUrl.startsWith("http") ? note.fileUrl : `${API_URL}${note.fileUrl}`
+    : "";
+  // Google Docs Viewer URL for rendering PDFs inline (Cloudinary raw URLs auto-download)
+  const pdfPreviewUrl = isPdf && fileUrl
+    ? `https://docs.google.com/gview?url=${encodeURIComponent(fileUrl)}&embedded=true`
+    : "";
   const netVotes = note ? (note.upvotes || 0) - (note.downvotes || 0) : 0;
 
   const uploadDate = note
@@ -272,9 +278,10 @@ const NoteDetail = () => {
               {isPdf ? (
                 <div className="w-full rounded-xl overflow-hidden bg-gray-100" style={{ height: "600px" }}>
                   <iframe
-                    src={`${fileUrl}#toolbar=1`}
+                    src={pdfPreviewUrl}
                     title={note.title}
                     className="w-full h-full border-0"
+                    sandbox="allow-scripts allow-same-origin allow-popups"
                   />
                 </div>
               ) : (
@@ -369,7 +376,7 @@ const NoteDetail = () => {
               href={fileUrl}
               target="_blank"
               rel="noopener noreferrer"
-              download
+              download={`${note.title}.${isPdf ? "pdf" : "jpg"}`}
               className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-md shadow-primary-200 hover:shadow-lg transition-all"
             >
               <span className="text-base">⬇</span>

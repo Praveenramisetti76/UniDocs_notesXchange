@@ -114,10 +114,10 @@ const NoteCard = ({ note }) => {
               View
             </Link>
             <a
-              href={`${API_URL}${note.fileUrl}`}
+              href={note.fileUrl.startsWith("http") ? note.fileUrl : `${API_URL}${note.fileUrl}`}
               target="_blank"
               rel="noopener noreferrer"
-              download
+              download={`${note.title}.${isPdf ? "pdf" : "jpg"}`}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-sm transition-all"
             >
               Download
