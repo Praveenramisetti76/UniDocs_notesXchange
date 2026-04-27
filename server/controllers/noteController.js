@@ -138,6 +138,22 @@ export const getNoteById = async (req, res) => {
   }
 };
 
+// @route   GET /api/notes/my-uploads
+// @desc    Get all notes uploaded by the current user
+// @access  Private
+export const getUserNotes = async (req, res) => {
+  try {
+    const notes = await Note.find({ uploadedBy: req.user.id })
+      .populate("uploadedBy", "name")
+      .sort({ createdAt: -1 });
+
+    res.json({ notes, total: notes.length });
+  } catch (error) {
+    console.error("Get user notes error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // @route   DELETE /api/notes/:id
 // @desc    Delete a note (owner only)
 // @access  Private

@@ -85,3 +85,25 @@ export const getMyVote = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// @route   GET /api/notes/my-votes
+// @desc    Get all votes cast by the current user with note details
+// @access  Private
+export const getUserVotes = async (req, res) => {
+  try {
+    const votes = await Vote.find({ userId: req.user.id })
+      .populate({
+        path: "noteId",
+        populate: { path: "uploadedBy", select: "name" },
+      })
+      .sort({ _id: -1 });
+
+    // Filter out votes whose notes may have been deleted
+    const validVotes = votes.filter((v) => v.noteId != null);
+
+    res.json({ votes: validVotes, total: validVotes.length });
+  } catch (error) {
+    console.error("Get user votes error:", error.message);
+    res.status(500).json({ message: "Server error" });
+  }
+};
