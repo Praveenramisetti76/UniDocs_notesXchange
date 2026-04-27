@@ -93,6 +93,16 @@ const Layout = ({ children }) => {
                   >
                     Upload
                   </Link>
+                  <Link
+                    to="/dashboard"
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      isActive("/dashboard")
+                        ? "bg-primary-50 text-primary-700"
+                        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    }`}
+                  >
+                    Dashboard
+                  </Link>
                 </>
               )}
 
@@ -185,6 +195,13 @@ const Layout = ({ children }) => {
                     className="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-all"
                   >
                     Upload Notes
+                  </Link>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition-all"
+                  >
+                    My Dashboard
                   </Link>
                 </>
               )}
