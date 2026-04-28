@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
-import LandingPage from "../pages/LandingPage";
+import PublicLayout from "./PublicLayout";
+import PublicHome from "../pages/PublicHome";
 
 const AuthRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -13,7 +14,11 @@ const AuthRoute = ({ children }) => {
   }
 
   if (!isAuthenticated) {
-    return <LandingPage />;
+    return (
+      <PublicLayout>
+        <PublicHome />
+      </PublicLayout>
+    );
   }
 
   return children;

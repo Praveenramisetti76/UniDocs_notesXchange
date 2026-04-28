@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+import CampusWatermark from "../components/CampusWatermark";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -128,7 +129,9 @@ const Upload = () => {
   const inputBase = "w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all";
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
+    <>
+      <CampusWatermark variant="upload" />
+      <div className="campus-page-content max-w-2xl mx-auto px-4 sm:px-6 py-10">
       {/* Header */}
       <div className="text-center mb-8 animate-fadeInUp">
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-2xl mb-4 shadow-lg shadow-primary-200/50">
@@ -138,7 +141,7 @@ const Upload = () => {
         <p className="text-gray-500 mt-2">Share your study material with fellow students</p>
       </div>
 
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl shadow-gray-200/40 border border-gray-100/80 p-6 sm:p-8 animate-fadeInUp delay-100">
+      <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-xl shadow-primary-100/20 border border-white/40 p-6 sm:p-8 animate-fadeInUp delay-100">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Title */}
           <div>
@@ -347,7 +350,8 @@ const Upload = () => {
           </button>
         </form>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

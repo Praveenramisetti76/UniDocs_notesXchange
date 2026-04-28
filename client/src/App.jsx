@@ -3,9 +3,13 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Layout from "./components/Layout";
+import PublicLayout from "./components/PublicLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AuthRoute from "./components/AuthRoute";
-import LandingPage from "./pages/LandingPage";
+import PublicHome from "./pages/PublicHome";
+import AboutPage from "./pages/AboutPage";
+import FeaturesPage from "./pages/FeaturesPage";
+import ContactPage from "./pages/ContactPage";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -53,54 +57,91 @@ function App() {
               },
             }}
           />
-          <Layout>
-            <Routes>
-              {/* Landing page for unauthenticated, Browse notes for authenticated */}
-              <Route
-                path="/"
-                element={
-                  <AuthRoute>
+          <Routes>
+            {/* ── Public pages (before login) ── */}
+            <Route
+              path="/"
+              element={
+                <AuthRoute>
+                  {/* If authenticated, show the internal home with Layout */}
+                  <Layout>
                     <Home />
-                  </AuthRoute>
-                }
-              />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route
-                path="/upload"
-                element={
-                  <ProtectedRoute>
+                  </Layout>
+                </AuthRoute>
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                <PublicLayout>
+                  <AboutPage />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/features"
+              element={
+                <PublicLayout>
+                  <FeaturesPage />
+                </PublicLayout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <PublicLayout>
+                  <ContactPage />
+                </PublicLayout>
+              }
+            />
+
+            {/* ── Auth pages ── */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* ── Protected pages ── */}
+            <Route
+              path="/upload"
+              element={
+                <ProtectedRoute>
+                  <Layout>
                     <Upload />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/notes/:id"
-                element={
-                  <ProtectedRoute>
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/notes/:id"
+              element={
+                <ProtectedRoute>
+                  <Layout>
                     <NoteDetail />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Layout>
                     <Profile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Layout>
                     <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
+                  </Layout>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </Router>
       </AuthProvider>
     </ErrorBoundary>

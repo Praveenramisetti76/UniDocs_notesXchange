@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import NoteCard, { NoteCardSkeleton } from "../components/NoteCard";
+import CampusWatermark from "../components/CampusWatermark";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -120,7 +121,9 @@ const Home = () => {
   const hasActiveFilters = semester || branch || subject || search;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <>
+      <CampusWatermark variant="browse" />
+      <div className="campus-page-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Hero */}
       <div className="text-center mb-10 animate-fadeInUp">
         <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent mb-3 animate-gradient">
@@ -132,7 +135,7 @@ const Home = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm hover:shadow-md transition-shadow duration-300 p-4 sm:p-6 mb-8 animate-fadeInUp delay-100">
+      <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white/40 shadow-lg shadow-primary-100/20 hover:shadow-xl hover:shadow-primary-200/25 transition-shadow duration-300 p-4 sm:p-6 mb-8 animate-fadeInUp delay-100">
         {/* Mobile toggle */}
         <button
           onClick={() => setFiltersOpen(!filtersOpen)}
@@ -170,7 +173,7 @@ const Home = () => {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search by subject code (e.g. CS301)..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 focus:bg-white transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200/80 bg-white/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 focus:bg-white transition-all"
               />
             </div>
 
@@ -178,7 +181,7 @@ const Home = () => {
             <select
               value={semester}
               onChange={(e) => setSemester(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all appearance-none cursor-pointer"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200/80 bg-white/80 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all appearance-none cursor-pointer"
             >
               <option value="">All Semesters</option>
               {SEMESTERS.map((s) => (
@@ -192,7 +195,7 @@ const Home = () => {
             <select
               value={branch}
               onChange={(e) => setBranch(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all appearance-none cursor-pointer"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200/80 bg-white/80 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all appearance-none cursor-pointer"
             >
               <option value="">All Branches</option>
               {BRANCHES.map((b) => (
@@ -209,7 +212,7 @@ const Home = () => {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Subject name..."
-                className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all"
+                className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200/80 bg-white/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all"
               />
               {hasActiveFilters && (
                 <button
@@ -253,7 +256,7 @@ const Home = () => {
 
       {/* Error */}
       {error && (
-        <div className="mb-8 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-sm text-center animate-scaleIn">
+        <div className="mb-8 p-4 rounded-2xl bg-red-50/80 backdrop-blur-sm border border-red-100 text-red-600 text-sm text-center animate-scaleIn">
           {error}
           <button
             onClick={() => fetchNotes(1, false)}
@@ -285,7 +288,7 @@ const Home = () => {
               <button
                 onClick={handleLoadMore}
                 disabled={loadingMore}
-                className="group px-8 py-3 rounded-xl text-sm font-semibold text-primary-600 bg-primary-50 hover:bg-primary-100 border border-primary-100 disabled:opacity-50 transition-all cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary-100/50"
+                className="group px-8 py-3 rounded-xl text-sm font-semibold text-primary-600 bg-white/70 backdrop-blur-sm hover:bg-primary-50 border border-primary-100 disabled:opacity-50 transition-all cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary-100/50"
               >
                 {loadingMore ? (
                   <span className="flex items-center gap-2">
@@ -324,8 +327,10 @@ const Home = () => {
           )}
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
+
 };
 
 export default Home;

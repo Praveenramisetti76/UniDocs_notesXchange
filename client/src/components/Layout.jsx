@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import logoImg from "../assets/logo.png";
+import campusImg from "../assets/campus-aerial.jpg";
 
 const Layout = ({ children }) => {
   const { isAuthenticated, user, logout } = useAuth();
@@ -270,8 +271,24 @@ const Layout = ({ children }) => {
         </div>
       </nav>
 
+      {/* ── Watermark Campus Background (non-Browse/Upload pages) ── */}
+      {location.pathname !== "/" && location.pathname !== "/upload" && (
+        <div className="auth-watermark-bg" aria-hidden="true">
+          <img
+            src={campusImg}
+            alt=""
+            className="auth-watermark-bg__img"
+          />
+          <div className="auth-watermark-bg__overlay" />
+          <div className="auth-watermark-bg__orb auth-watermark-bg__orb--1" />
+          <div className="auth-watermark-bg__orb auth-watermark-bg__orb--2" />
+          <div className="auth-watermark-bg__orb auth-watermark-bg__orb--3" />
+          <div className="auth-watermark-bg__shimmer" />
+        </div>
+      )}
+
       {/* Main content */}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 relative" style={{ zIndex: 1 }}>{children}</main>
 
       {/* Footer */}
       <footer className="relative bg-white border-t border-gray-200/60 mt-auto overflow-hidden">
