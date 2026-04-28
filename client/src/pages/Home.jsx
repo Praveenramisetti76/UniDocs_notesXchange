@@ -122,8 +122,8 @@ const Home = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Hero */}
-      <div className="text-center mb-10">
-        <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 bg-clip-text text-transparent mb-3">
+      <div className="text-center mb-10 animate-fadeInUp">
+        <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent mb-3 animate-gradient">
           University Notes, Shared
         </h1>
         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto">
@@ -132,21 +132,25 @@ const Home = () => {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 mb-8">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm hover:shadow-md transition-shadow duration-300 p-4 sm:p-6 mb-8 animate-fadeInUp delay-100">
         {/* Mobile toggle */}
         <button
           onClick={() => setFiltersOpen(!filtersOpen)}
           className="sm:hidden flex items-center justify-between w-full text-sm font-medium text-gray-700 cursor-pointer"
         >
           <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-base">⚙</span>
-            Filters {hasActiveFilters && <span className="ml-1 w-2 h-2 rounded-full bg-primary-500"></span>}
+            <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+            <span>Filters</span>
+            {hasActiveFilters && <span className="ml-1 w-2 h-2 rounded-full bg-primary-500 animate-pulse" />}
           </div>
-          <span
-            className={`text-gray-400 transition-transform ${filtersOpen ? "rotate-180" : ""}`}
+          <svg
+            className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${filtersOpen ? "rotate-180" : ""}`}
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
           >
-            ▼
-          </span>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
         </button>
 
         {/* Filter controls */}
@@ -154,13 +158,19 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             {/* Search */}
             <div className="lg:col-span-2 relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔍</span>
+              <svg
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" strokeLinecap="round" />
+              </svg>
               <input
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search by subject code (e.g. CS301)..."
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 focus:bg-white transition-all"
               />
             </div>
 
@@ -168,7 +178,7 @@ const Home = () => {
             <select
               value={semester}
               onChange={(e) => setSemester(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all appearance-none cursor-pointer"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all appearance-none cursor-pointer"
             >
               <option value="">All Semesters</option>
               {SEMESTERS.map((s) => (
@@ -182,7 +192,7 @@ const Home = () => {
             <select
               value={branch}
               onChange={(e) => setBranch(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all appearance-none cursor-pointer"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all appearance-none cursor-pointer"
             >
               <option value="">All Branches</option>
               {BRANCHES.map((b) => (
@@ -199,7 +209,7 @@ const Home = () => {
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Subject name..."
-                className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200/80 bg-gray-50/80 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all"
               />
               {hasActiveFilters && (
                 <button
@@ -207,7 +217,9 @@ const Home = () => {
                   className="px-3 py-2.5 rounded-xl border border-gray-200 bg-white text-sm text-gray-500 hover:text-red-500 hover:border-red-200 hover:bg-red-50 transition-all shrink-0 cursor-pointer"
                   title="Clear all filters"
                 >
-                  ✕
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               )}
             </div>
@@ -217,7 +229,7 @@ const Home = () => {
 
       {/* Results count */}
       {!loading && (
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 animate-fadeIn">
           <p className="text-sm text-gray-500">
             {totalNotes > 0 ? (
               <>
@@ -241,11 +253,11 @@ const Home = () => {
 
       {/* Error */}
       {error && (
-        <div className="mb-8 p-4 rounded-xl bg-red-50 border border-red-100 text-red-600 text-sm text-center">
+        <div className="mb-8 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 text-sm text-center animate-scaleIn">
           {error}
           <button
             onClick={() => fetchNotes(1, false)}
-            className="ml-2 underline hover:no-underline cursor-pointer"
+            className="ml-2 underline hover:no-underline cursor-pointer font-medium"
           >
             Retry
           </button>
@@ -273,7 +285,7 @@ const Home = () => {
               <button
                 onClick={handleLoadMore}
                 disabled={loadingMore}
-                className="px-8 py-3 rounded-xl text-sm font-semibold text-primary-600 bg-primary-50 hover:bg-primary-100 border border-primary-100 disabled:opacity-50 transition-all cursor-pointer"
+                className="group px-8 py-3 rounded-xl text-sm font-semibold text-primary-600 bg-primary-50 hover:bg-primary-100 border border-primary-100 disabled:opacity-50 transition-all cursor-pointer hover:-translate-y-0.5 hover:shadow-md hover:shadow-primary-100/50"
               >
                 {loadingMore ? (
                   <span className="flex items-center gap-2">
@@ -281,7 +293,10 @@ const Home = () => {
                     Loading...
                   </span>
                 ) : (
-                  `Load more (${totalNotes - notes.length} remaining)`
+                  <span className="flex items-center gap-2">
+                    Load more
+                    <span className="text-xs text-primary-400 font-normal">({totalNotes - notes.length} remaining)</span>
+                  </span>
                 )}
               </button>
             </div>
@@ -289,8 +304,8 @@ const Home = () => {
         </>
       ) : (
         /* Empty State */
-        <div className="text-center py-20">
-          <div className="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
+        <div className="text-center py-20 animate-fadeIn">
+          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
             <span className="text-4xl opacity-40">📄</span>
           </div>
           <h3 className="text-lg font-semibold text-gray-700 mb-2">No notes found</h3>

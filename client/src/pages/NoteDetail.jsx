@@ -166,7 +166,7 @@ const NoteDetail = () => {
   // Error
   if (error) {
     return (
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center animate-fadeInUp">
         <div className="w-20 h-20 mx-auto mb-6 bg-red-50 rounded-2xl flex items-center justify-center">
           <span className="text-3xl">⚠️</span>
         </div>
@@ -180,13 +180,18 @@ const NoteDetail = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 animate-fadeIn">
       {/* Delete confirmation modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Delete this note?</h3>
-            <p className="text-sm text-gray-500 mb-6">This action cannot be undone. The file will be permanently removed.</p>
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full animate-scaleIn">
+            <div className="w-12 h-12 mx-auto mb-4 bg-red-50 rounded-2xl flex items-center justify-center">
+              <svg className="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">Delete this note?</h3>
+            <p className="text-sm text-gray-500 mb-6 text-center">This action cannot be undone. The file will be permanently removed.</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
@@ -198,7 +203,7 @@ const NoteDetail = () => {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 disabled:opacity-50 transition-all cursor-pointer"
+                className="flex-1 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 disabled:opacity-50 transition-all cursor-pointer shadow-md shadow-red-200/50"
               >
                 {deleting ? (
                   <span className="flex items-center justify-center gap-2">
@@ -217,9 +222,11 @@ const NoteDetail = () => {
       {/* Back button */}
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary-600 transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-primary-600 transition-colors mb-6 group"
       >
-        <span className="text-lg leading-none">←</span>
+        <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
         Back to notes
       </Link>
 
@@ -227,17 +234,17 @@ const NoteDetail = () => {
         {/* Main content — left 2 columns */}
         <div className="lg:col-span-2 space-y-6">
           {/* Note header card */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm overflow-hidden">
             {/* Color banner */}
             <div
               className={`h-2 w-full ${
                 isPdf
-                  ? "bg-gradient-to-r from-red-400 to-red-500"
-                  : "bg-gradient-to-r from-emerald-400 to-teal-500"
+                  ? "bg-gradient-to-r from-red-400 via-rose-400 to-red-500"
+                  : "bg-gradient-to-r from-emerald-400 via-green-400 to-teal-500"
               }`}
             />
             <div className="p-6">
-              <h1 className="text-2xl font-bold text-gray-900 mb-3">{note.title}</h1>
+              <h1 className="text-2xl font-extrabold text-gray-900 mb-3">{note.title}</h1>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-4">
@@ -270,8 +277,12 @@ const NoteDetail = () => {
           </div>
 
           {/* File Preview */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="p-4 border-b border-gray-100">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-gray-100/80 flex items-center gap-2">
+              <svg className="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
               <h2 className="text-sm font-semibold text-gray-700">Preview</h2>
             </div>
             <div className="p-4">
@@ -300,21 +311,23 @@ const NoteDetail = () => {
         {/* Sidebar — right column */}
         <div className="space-y-6">
           {/* Voting Card */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm p-6">
             <h3 className="text-sm font-semibold text-gray-700 mb-4">Rate this note</h3>
 
-            <div className="flex items-center justify-center gap-6 mb-4">
+            <div className="flex items-center justify-center gap-4 mb-4">
               {/* Upvote */}
               <button
                 onClick={() => handleVote("upvote")}
                 disabled={voting}
-                className={`flex flex-col items-center gap-1 px-4 py-3 rounded-xl transition-all cursor-pointer ${
+                className={`flex flex-col items-center gap-1.5 px-5 py-3.5 rounded-2xl transition-all duration-200 cursor-pointer ${
                   myVote === "upvote"
-                    ? "bg-emerald-50 border-2 border-emerald-300 text-emerald-600"
+                    ? "bg-emerald-50 border-2 border-emerald-300 text-emerald-600 shadow-sm shadow-emerald-100"
                     : "bg-gray-50 border-2 border-transparent hover:border-emerald-200 hover:bg-emerald-50 text-gray-400 hover:text-emerald-500"
                 }`}
               >
-                <span className="text-2xl font-bold leading-none">▲</span>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                </svg>
                 <span className="text-lg font-bold">{note.upvotes || 0}</span>
               </button>
 
@@ -336,29 +349,31 @@ const NoteDetail = () => {
               <button
                 onClick={() => handleVote("downvote")}
                 disabled={voting}
-                className={`flex flex-col items-center gap-1 px-4 py-3 rounded-xl transition-all cursor-pointer ${
+                className={`flex flex-col items-center gap-1.5 px-5 py-3.5 rounded-2xl transition-all duration-200 cursor-pointer ${
                   myVote === "downvote"
-                    ? "bg-red-50 border-2 border-red-300 text-red-500"
+                    ? "bg-red-50 border-2 border-red-300 text-red-500 shadow-sm shadow-red-100"
                     : "bg-gray-50 border-2 border-transparent hover:border-red-200 hover:bg-red-50 text-gray-400 hover:text-red-500"
                 }`}
               >
-                <span className="text-2xl font-bold leading-none">▼</span>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
                 <span className="text-lg font-bold">{note.downvotes || 0}</span>
               </button>
             </div>
 
             {!isAuthenticated && (
               <p className="text-xs text-gray-400 text-center">
-                <Link to="/login" className="text-primary-600 hover:underline">Log in</Link> to vote
+                <Link to="/login" className="text-primary-600 hover:underline font-medium">Log in</Link> to vote
               </p>
             )}
           </div>
 
           {/* Uploader Card */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm p-6">
             <h3 className="text-sm font-semibold text-gray-700 mb-4">Uploaded by</h3>
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold shadow-md shadow-primary-200">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-white font-bold shadow-md shadow-primary-200/50 ring-2 ring-primary-100">
                 {note.uploadedBy?.name?.charAt(0).toUpperCase() || "?"}
               </div>
               <div>
@@ -377,18 +392,22 @@ const NoteDetail = () => {
               target="_blank"
               rel="noopener noreferrer"
               download={`${note.title}.${isPdf ? "pdf" : "jpg"}`}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-md shadow-primary-200 hover:shadow-lg transition-all"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-200/50 hover:shadow-xl hover:shadow-primary-300/40 transition-all duration-300 hover:-translate-y-0.5"
             >
-              <span className="text-base">⬇</span>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
               Download
             </a>
 
             {isOwner && (
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-medium text-red-600 border-2 border-red-200 hover:bg-red-50 transition-all cursor-pointer"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-medium text-red-600 border-2 border-red-200 hover:bg-red-50 transition-all cursor-pointer hover:border-red-300"
               >
-                <span className="text-base">🗑</span>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
                 Delete Note
               </button>
             )}

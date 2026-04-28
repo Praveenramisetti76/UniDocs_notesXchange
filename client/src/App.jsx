@@ -25,14 +25,15 @@ function App() {
             toastOptions={{
               duration: 3000,
               style: {
-                borderRadius: "12px",
-                padding: "12px 16px",
+                borderRadius: "16px",
+                padding: "14px 20px",
                 fontSize: "14px",
                 fontWeight: "500",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
               },
               success: {
                 style: {
-                  background: "#10b981",
+                  background: "linear-gradient(135deg, #10b981, #059669)",
                   color: "#fff",
                 },
                 iconTheme: {
@@ -42,7 +43,7 @@ function App() {
               },
               error: {
                 style: {
-                  background: "#ef4444",
+                  background: "linear-gradient(135deg, #ef4444, #dc2626)",
                   color: "#fff",
                 },
                 iconTheme: {

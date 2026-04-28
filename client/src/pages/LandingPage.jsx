@@ -7,56 +7,61 @@ import communityImg from "../assets/community-feature.png";
 
 const LandingPage = () => {
   return (
-    <div className="landing-page">
+    <div className="landing-page overflow-hidden">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100/50">
-        {/* Decorative background blobs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100/50 min-h-[90vh] flex items-center">
+        {/* Animated background blobs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-200/30 rounded-full blur-3xl animate-blob" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary-300/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-100/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             {/* Left column — text */}
-            <div className="text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100/80 text-primary-700 text-sm font-medium mb-6">
-                <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+            <div className="text-center lg:text-left animate-fadeInUp">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100/80 text-primary-700 text-sm font-medium mb-6 border border-primary-200/50">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-500" />
+                </span>
                 University Notes Exchange Platform
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight">
                 <span className="text-gray-900">Share & Access</span>
                 <br />
-                <span className="bg-gradient-to-r from-primary-600 via-primary-700 to-primary-800 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent animate-gradient">
                   University Notes
                 </span>
               </h1>
 
-              <p className="mt-6 text-lg sm:text-xl text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+              <p className="mt-6 text-lg sm:text-xl text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed animate-fadeInUp delay-200">
                 Upload your study materials, discover high-quality notes from peers, and ace your exams together. The ultimate student knowledge hub.
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fadeInUp delay-300">
                 <Link
                   to="/register"
-                  className="px-8 py-3.5 rounded-2xl text-base font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-200 hover:shadow-xl hover:shadow-primary-300 transition-all duration-300 transform hover:-translate-y-0.5 text-center"
+                  className="group relative px-8 py-3.5 rounded-2xl text-base font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-200/60 hover:shadow-xl hover:shadow-primary-300/50 transition-all duration-300 transform hover:-translate-y-1 text-center overflow-hidden"
                 >
-                  Get Started Free
+                  <span className="relative z-10">Get Started Free</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary-600 to-primary-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Link>
                 <Link
                   to="/login"
-                  className="px-8 py-3.5 rounded-2xl text-base font-semibold text-gray-700 bg-white border-2 border-gray-200 hover:border-primary-300 hover:text-primary-700 shadow-sm hover:shadow-md transition-all duration-300 text-center"
+                  className="px-8 py-3.5 rounded-2xl text-base font-semibold text-gray-700 bg-white/80 backdrop-blur-sm border-2 border-gray-200 hover:border-primary-300 hover:text-primary-700 shadow-sm hover:shadow-md transition-all duration-300 text-center hover:-translate-y-0.5"
                 >
                   Sign In
                 </Link>
               </div>
 
               {/* Social proof */}
-              <div className="mt-10 flex items-center gap-6 justify-center lg:justify-start">
+              <div className="mt-10 flex items-center gap-6 justify-center lg:justify-start animate-fadeInUp delay-400">
                 <div className="flex -space-x-3">
                   {["P", "A", "R", "S"].map((letter, i) => (
                     <div
                       key={i}
-                      className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white text-sm font-bold shadow-sm"
+                      className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center text-white text-sm font-bold shadow-md transition-transform hover:scale-110 hover:z-10"
                       style={{
                         background: [
                           "linear-gradient(135deg, #6366f1, #4f46e5)",
@@ -78,27 +83,38 @@ const LandingPage = () => {
             </div>
 
             {/* Right column — hero image */}
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex justify-center lg:justify-end animate-fadeInUp delay-300">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-3xl blur-2xl transform rotate-3" />
+                <div className="absolute -inset-4 bg-gradient-to-br from-primary-400/20 to-primary-600/20 rounded-3xl blur-2xl transform rotate-2 animate-blob" />
+                <div className="absolute -inset-2 bg-gradient-to-tl from-primary-300/10 to-transparent rounded-3xl blur-xl" />
                 <img
                   src={heroImg}
                   alt="University students sharing notes and studying together"
-                  className="relative w-full max-w-md lg:max-w-lg rounded-3xl shadow-2xl shadow-primary-200/50"
+                  className="relative w-full max-w-md lg:max-w-lg rounded-3xl shadow-2xl shadow-primary-200/40 animate-float"
                 />
               </div>
             </div>
           </div>
         </div>
+
+        {/* Bottom wave */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 50L60 45C120 40 240 30 360 35C480 40 600 60 720 65C840 70 960 60 1080 50C1200 40 1320 30 1380 25L1440 20V100H0Z" fill="white"/>
+          </svg>
+        </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 sm:py-28 bg-white">
+      <section className="py-20 sm:py-28 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary-50 text-primary-600 text-xs font-semibold tracking-wide uppercase mb-4 border border-primary-100">
+              Features
+            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
               Everything You Need to{" "}
-              <span className="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary-600 to-primary-500 bg-clip-text text-transparent">
                 Excel
               </span>
             </h2>
@@ -107,34 +123,42 @@ const LandingPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
                 img: uploadImg,
                 title: "Easy Upload",
                 desc: "Drag & drop your PDFs and images. Share notes with your fellow students in seconds.",
+                color: "from-violet-500 to-indigo-500",
+                bg: "bg-violet-50",
               },
               {
                 img: searchImg,
                 title: "Smart Search",
                 desc: "Filter by semester, branch, or subject code. Find exactly the notes you need, fast.",
+                color: "from-blue-500 to-cyan-500",
+                bg: "bg-blue-50",
               },
               {
                 img: voteImg,
                 title: "Vote & Rate",
                 desc: "Upvote the best notes and downvote poor ones. Quality rises to the top organically.",
+                color: "from-emerald-500 to-teal-500",
+                bg: "bg-emerald-50",
               },
               {
                 img: communityImg,
                 title: "Student Community",
                 desc: "Join a growing community of learners helping each other succeed in university.",
+                color: "from-orange-500 to-amber-500",
+                bg: "bg-orange-50",
               },
             ].map((feature, i) => (
               <div
                 key={i}
-                className="group relative bg-gradient-to-b from-gray-50 to-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:shadow-primary-100/40 hover:border-primary-200 transition-all duration-500 hover:-translate-y-1"
+                className="group relative bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-2xl hover:shadow-primary-100/30 hover:border-primary-200 transition-all duration-500 hover:-translate-y-2"
               >
-                <div className="w-16 h-16 rounded-2xl overflow-hidden mb-5 shadow-sm group-hover:shadow-md transition-shadow duration-300">
+                <div className={`w-14 h-14 rounded-2xl ${feature.bg} overflow-hidden mb-5 shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:scale-105`}>
                   <img
                     src={feature.img}
                     alt={feature.title}
@@ -147,6 +171,8 @@ const LandingPage = () => {
                 <p className="text-sm text-gray-500 leading-relaxed">
                   {feature.desc}
                 </p>
+                {/* Hover gradient border effect */}
+                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500`} />
               </div>
             ))}
           </div>
@@ -154,9 +180,12 @@ const LandingPage = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-20 sm:py-28 bg-gradient-to-b from-gray-50 to-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary-50 text-primary-600 text-xs font-semibold tracking-wide uppercase mb-4 border border-primary-100">
+              Getting Started
+            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
               How It Works
             </h2>
@@ -186,20 +215,22 @@ const LandingPage = () => {
                 gradient: "from-primary-700 to-primary-800",
               },
             ].map((item, i) => (
-              <div key={i} className="relative text-center">
+              <div key={i} className="relative text-center group">
                 {/* Step number */}
                 <div
-                  className={`inline-flex w-16 h-16 rounded-2xl bg-gradient-to-br ${item.gradient} items-center justify-center text-white text-2xl font-extrabold shadow-lg shadow-primary-200 mb-6`}
+                  className={`inline-flex w-16 h-16 rounded-2xl bg-gradient-to-br ${item.gradient} items-center justify-center text-white text-2xl font-extrabold shadow-lg shadow-primary-200/50 mb-6 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3`}
                 >
                   {item.step}
                 </div>
 
                 {/* Connector line (visible on md+, not on last step) */}
                 {i < 2 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary-200 to-primary-100" />
+                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5">
+                    <div className="w-full h-full bg-gradient-to-r from-primary-200 to-primary-100 rounded-full" />
+                  </div>
                 )}
 
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-700 transition-colors">{item.title}</h3>
                 <p className="text-sm text-gray-500 leading-relaxed max-w-xs mx-auto">
                   {item.desc}
                 </p>
@@ -214,8 +245,9 @@ const LandingPage = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative overflow-hidden bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-3xl p-10 sm:p-16 text-center">
             {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-60 h-60 bg-white/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+            <div className="absolute top-0 left-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2 animate-blob" />
+            <div className="absolute bottom-0 right-0 w-60 h-60 bg-white/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 animate-blob" style={{ animationDelay: "3s" }} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-blob" style={{ animationDelay: "6s" }} />
 
             <div className="relative">
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">
@@ -227,7 +259,7 @@ const LandingPage = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   to="/register"
-                  className="px-8 py-3.5 rounded-2xl text-base font-semibold text-primary-700 bg-white hover:bg-primary-50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
+                  className="px-8 py-3.5 rounded-2xl text-base font-semibold text-primary-700 bg-white hover:bg-primary-50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 >
                   Create Free Account
                 </Link>

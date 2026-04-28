@@ -125,15 +125,20 @@ const Upload = () => {
 
   const isPdf = file?.type === "application/pdf";
 
+  const inputBase = "w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all";
+
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Upload Notes</h1>
+      <div className="text-center mb-8 animate-fadeInUp">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white text-2xl mb-4 shadow-lg shadow-primary-200/50">
+          📤
+        </div>
+        <h1 className="text-3xl font-extrabold text-gray-900">Upload Notes</h1>
         <p className="text-gray-500 mt-2">Share your study material with fellow students</p>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 border border-gray-100 p-6 sm:p-8">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl shadow-gray-200/40 border border-gray-100/80 p-6 sm:p-8 animate-fadeInUp delay-100">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Title */}
           <div>
@@ -147,11 +152,11 @@ const Upload = () => {
               value={formData.title}
               onChange={handleChange}
               placeholder="e.g. Data Structures Complete Notes"
-              className={`w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                errors.title ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"
+              className={`${inputBase} ${
+                errors.title ? "border-red-300 bg-red-50" : "border-gray-200/80 bg-gray-50/80"
               }`}
             />
-            {errors.title && <p className="mt-1 text-xs text-red-500">{errors.title}</p>}
+            {errors.title && <p className="mt-1.5 text-xs text-red-500 font-medium">{errors.title}</p>}
           </div>
 
           {/* Subject + Subject Code */}
@@ -167,11 +172,11 @@ const Upload = () => {
                 value={formData.subject}
                 onChange={handleChange}
                 placeholder="e.g. Data Structures"
-                className={`w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all ${
-                  errors.subject ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"
+                className={`${inputBase} ${
+                  errors.subject ? "border-red-300 bg-red-50" : "border-gray-200/80 bg-gray-50/80"
                 }`}
               />
-              {errors.subject && <p className="mt-1 text-xs text-red-500">{errors.subject}</p>}
+              {errors.subject && <p className="mt-1.5 text-xs text-red-500 font-medium">{errors.subject}</p>}
             </div>
             <div>
               <label htmlFor="subjectCode" className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -184,7 +189,7 @@ const Upload = () => {
                 value={formData.subjectCode}
                 onChange={handleChange}
                 placeholder="e.g. CS301"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                className={`${inputBase} border-gray-200/80 bg-gray-50/80`}
               />
             </div>
           </div>
@@ -200,8 +205,8 @@ const Upload = () => {
                 name="semester"
                 value={formData.semester}
                 onChange={handleChange}
-                className={`w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all appearance-none cursor-pointer ${
-                  errors.semester ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"
+                className={`${inputBase} appearance-none cursor-pointer ${
+                  errors.semester ? "border-red-300 bg-red-50" : "border-gray-200/80 bg-gray-50/80"
                 } ${!formData.semester ? "text-gray-400" : "text-gray-700"}`}
               >
                 <option value="">Select semester</option>
@@ -211,7 +216,7 @@ const Upload = () => {
                   </option>
                 ))}
               </select>
-              {errors.semester && <p className="mt-1 text-xs text-red-500">{errors.semester}</p>}
+              {errors.semester && <p className="mt-1.5 text-xs text-red-500 font-medium">{errors.semester}</p>}
             </div>
             <div>
               <label htmlFor="branch" className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -222,8 +227,8 @@ const Upload = () => {
                 name="branch"
                 value={formData.branch}
                 onChange={handleChange}
-                className={`w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all appearance-none cursor-pointer ${
-                  errors.branch ? "border-red-300 bg-red-50" : "border-gray-200 bg-gray-50"
+                className={`${inputBase} appearance-none cursor-pointer ${
+                  errors.branch ? "border-red-300 bg-red-50" : "border-gray-200/80 bg-gray-50/80"
                 } ${!formData.branch ? "text-gray-400" : "text-gray-700"}`}
               >
                 <option value="">Select branch</option>
@@ -233,7 +238,7 @@ const Upload = () => {
                   </option>
                 ))}
               </select>
-              {errors.branch && <p className="mt-1 text-xs text-red-500">{errors.branch}</p>}
+              {errors.branch && <p className="mt-1.5 text-xs text-red-500 font-medium">{errors.branch}</p>}
             </div>
           </div>
 
@@ -249,12 +254,12 @@ const Upload = () => {
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onClick={() => fileInputRef.current?.click()}
-                className={`relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all ${
+                className={`relative border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 ${
                   dragActive
-                    ? "border-primary-400 bg-primary-50"
+                    ? "border-primary-400 bg-primary-50/80 scale-[1.01]"
                     : errors.file
                     ? "border-red-300 bg-red-50"
-                    : "border-gray-200 bg-gray-50 hover:border-primary-300 hover:bg-primary-50/50"
+                    : "border-gray-200 bg-gray-50/50 hover:border-primary-300 hover:bg-primary-50/30"
                 }`}
               >
                 <input
@@ -265,14 +270,16 @@ const Upload = () => {
                   className="hidden"
                 />
                 <div className="flex flex-col items-center gap-3">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${
-                    dragActive ? "bg-primary-100" : "bg-gray-100"
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 ${
+                    dragActive ? "bg-primary-100 scale-110" : "bg-gray-100"
                   }`}>
-                    <span className={`text-3xl ${dragActive ? "opacity-80" : "opacity-50"}`}>☁️</span>
+                    <svg className={`w-7 h-7 transition-colors ${dragActive ? "text-primary-500" : "text-gray-400"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l3 3m-3-3l-3 3M6.75 19.5a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.338-2.32 3 3 0 013.438 3.42A3.75 3.75 0 0118 19.5H6.75z" />
+                    </svg>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-700">
-                      <span className="text-primary-600">Click to upload</span> or drag and drop
+                      <span className="text-primary-600 font-semibold">Click to upload</span> or drag and drop
                     </p>
                     <p className="text-xs text-gray-400 mt-1">PDF, JPG, JPEG, PNG — up to 10MB</p>
                   </div>
@@ -280,7 +287,7 @@ const Upload = () => {
               </div>
             ) : (
               /* Selected file preview */
-              <div className="flex items-center gap-4 p-4 rounded-2xl border border-gray-200 bg-gray-50">
+              <div className="flex items-center gap-4 p-4 rounded-2xl border border-gray-200/80 bg-gray-50/80 animate-scaleIn">
                 <div
                   className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold ${
                     isPdf ? "bg-red-50 text-red-500" : "bg-emerald-50 text-emerald-500"
@@ -295,24 +302,26 @@ const Upload = () => {
                 <button
                   type="button"
                   onClick={removeFile}
-                  className="p-1.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all cursor-pointer text-lg font-bold"
+                  className="p-2 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all cursor-pointer"
                 >
-                  ✕
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </div>
             )}
 
-            {errors.file && <p className="mt-1 text-xs text-red-500">{errors.file}</p>}
+            {errors.file && <p className="mt-1.5 text-xs text-red-500 font-medium">{errors.file}</p>}
           </div>
 
           {/* Progress Bar */}
           {uploading && (
-            <div className="space-y-2">
+            <div className="space-y-2 animate-fadeIn">
               <div className="flex justify-between text-xs text-gray-500">
                 <span>Uploading...</span>
-                <span>{progress}%</span>
+                <span className="font-semibold">{progress}%</span>
               </div>
-              <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+              <div className="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-300 ease-out"
                   style={{ width: `${progress}%` }}
@@ -325,7 +334,7 @@ const Upload = () => {
           <button
             type="submit"
             disabled={uploading}
-            className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-md shadow-primary-200 hover:shadow-lg disabled:opacity-50 transition-all cursor-pointer"
+            className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-200/50 hover:shadow-xl hover:shadow-primary-300/40 disabled:opacity-50 transition-all duration-300 cursor-pointer hover:-translate-y-0.5"
           >
             {uploading ? (
               <span className="flex items-center justify-center gap-2">
