@@ -14,9 +14,6 @@ const getPublicIdFromUrl = (url) => {
   }
 };
 
-// @route   GET /api/profile/me
-// @desc    Get current user's profile
-// @access  Private
 export const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -30,9 +27,6 @@ export const getProfile = async (req, res) => {
   }
 };
 
-// @route   PUT /api/profile/me
-// @desc    Update current user's profile (name, bio, college)
-// @access  Private
 export const updateProfile = async (req, res) => {
   try {
     const { name, bio, college } = req.body;
@@ -73,9 +67,7 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-// @route   PUT /api/profile/photo
-// @desc    Upload / update profile photo
-// @access  Private
+
 export const updateProfilePhoto = async (req, res) => {
   try {
     if (!req.file) {

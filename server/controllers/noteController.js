@@ -1,15 +1,12 @@
 import cloudinary from "../config/cloudinary.js";
 import Note from "../models/Note.js";
 
-// Helper: extract Cloudinary public_id from a URL
 const getPublicIdFromUrl = (url) => {
   try {
-    // Cloudinary URLs look like:
-    // https://res.cloudinary.com/<cloud>/image/upload/v123/unidocs/notes/filename.jpg
-    // https://res.cloudinary.com/<cloud>/raw/upload/v123/unidocs/notes/filename.pdf
+
     const parts = url.split("/upload/");
     if (parts.length < 2) return null;
-    // Remove the version prefix (v123456789/) and file extension for images
+  
     const afterUpload = parts[1].replace(/^v\d+\//, "");
     return afterUpload;
   } catch {
@@ -45,10 +42,9 @@ export const uploadNote = async (req, res) => {
       });
     }
 
-    // Determine file type from mimetype
+  
     const fileType = req.file.mimetype === "application/pdf" ? "pdf" : "image";
 
-    // req.file.path contains the full Cloudinary URL
     const note = await Note.create({
       title,
       subject,
@@ -83,9 +79,7 @@ export const uploadNote = async (req, res) => {
   }
 };
 
-// @route   GET /api/notes
-// @desc    Get all notes with filters, search, pagination, sorted by net votes
-// @access  Public
+
 export const getNotes = async (req, res) => {
   try {
     const { semester, subject, branch, search, page = 1, limit = 10 } = req.query;
@@ -120,9 +114,7 @@ export const getNotes = async (req, res) => {
   }
 };
 
-// @route   GET /api/notes/:id
-// @desc    Get a single note by ID
-// @access  Public
+
 export const getNoteById = async (req, res) => {
   try {
     const note = await Note.findById(req.params.id).populate("uploadedBy", "name email");
@@ -138,9 +130,7 @@ export const getNoteById = async (req, res) => {
   }
 };
 
-// @route   GET /api/notes/my-uploads
-// @desc    Get all notes uploaded by the current user
-// @access  Private
+
 export const getUserNotes = async (req, res) => {
   try {
     const notes = await Note.find({ uploadedBy: req.user.id })
@@ -154,9 +144,7 @@ export const getUserNotes = async (req, res) => {
   }
 };
 
-// @route   DELETE /api/notes/:id
-// @desc    Delete a note (owner only)
-// @access  Private
+
 export const deleteNote = async (req, res) => {
   try {
     const note = await Note.findById(req.params.id);

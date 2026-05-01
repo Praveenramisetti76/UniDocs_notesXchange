@@ -1,9 +1,7 @@
 import Vote from "../models/Vote.js";
 import Note from "../models/Note.js";
 
-// @route   POST /api/notes/:id/vote
-// @desc    Upvote or downvote a note (toggle/switch logic)
-// @access  Private
+
 export const voteNote = async (req, res) => {
   try {
     const { voteType } = req.body;
@@ -67,9 +65,6 @@ export const voteNote = async (req, res) => {
   }
 };
 
-// @route   GET /api/notes/:id/myvote
-// @desc    Get current user's vote on a note
-// @access  Private
 export const getMyVote = async (req, res) => {
   try {
     const vote = await Vote.findOne({
@@ -86,9 +81,6 @@ export const getMyVote = async (req, res) => {
   }
 };
 
-// @route   GET /api/notes/my-votes
-// @desc    Get all votes cast by the current user with note details
-// @access  Private
 export const getUserVotes = async (req, res) => {
   try {
     const votes = await Vote.find({ userId: req.user.id })

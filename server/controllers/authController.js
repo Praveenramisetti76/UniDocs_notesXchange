@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-// Helper: generate JWT
+
 const generateToken = (user) => {
   return jwt.sign(
     { id: user._id, email: user.email },
@@ -12,9 +12,7 @@ const generateToken = (user) => {
   );
 };
 
-// @route   POST /api/auth/register
-// @desc    Register a new user
-// @access  Public
+
 export const register = async (req, res) => {
   // Validate request body
   const errors = validationResult(req);
