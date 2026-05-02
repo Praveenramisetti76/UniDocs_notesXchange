@@ -1,4 +1,4 @@
-# UniDocs — Notes X Change 📚
+<img width="1893" height="977" alt="image" src="https://github.com/user-attachments/assets/4f51b899-33b4-40fa-9c6a-eb00a347a339" /># UniDocs — Notes X Change 📚
 
 A full-stack university notes sharing platform built with React, Node.js, Express, and MongoDB. Students can upload, browse, search, vote on, and download study notes across branches and semesters.
 
@@ -7,6 +7,9 @@ A full-stack university notes sharing platform built with React, Node.js, Expres
 - 💻 **Code Walkthrough:**  https://drive.google.com/file/d/1sUouxUdxTb5uq8DHrY-OzB30UKRam3-x/view?usp=sharing
 
 ![Uploading image.png…]()
+
+
+
 
 ## 🛠 Tech Stack
 
