@@ -2,6 +2,9 @@
 
 A full-stack university notes sharing platform built with React, Node.js, Express, and MongoDB. Students can upload, browse, search, vote on, and download study notes across branches and semesters.
 
+
+- 🌐 **Project Demo:** https://your-demo-link.com  
+- 💻 **Code Walkthrough:** https://your-explanation-video-link.com  
 ## 🛠 Tech Stack
 
 | Layer      | Technology                                        |
