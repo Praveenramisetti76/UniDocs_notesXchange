@@ -1,19 +1,11 @@
-<img width="1893" height="977" alt="image" src="https://github.com/user-attachments/assets/4f51b899-33b4-40fa-9c6a-eb00a347a339" />
-
-# UniDocs — Notes X Change 📚
+# UniDocs — Notes X Change
 A full-stack university notes sharing platform built with React, Node.js, Express, and MongoDB. Students can upload, browse, search, vote on, and download study notes across branches and semesters.
+- **Project Demo:**  https://drive.google.com/file/d/1O7-qHP-AdtykrJcJR5sLiN9798ZvHxaH/view
+- **Code Walkthrough:**  https://drive.google.com/file/d/1sUouxUdxTb5uq8DHrY-OzB30UKRam3-x/view?usp=sharing
+- **Report documentation:** https://drive.google.com/file/d/1C7zz40Ic_aDtsTumv_YgyxbE6OoaxFWH/view?usp=sharing
+  <img width="1893" height="977" alt="image" src="https://github.com/user-attachments/assets/4f51b899-33b4-40fa-9c6a-eb00a347a339" />
 
-
-- 🌐 **Project Demo:**  https://drive.google.com/file/d/1O7-qHP-AdtykrJcJR5sLiN9798ZvHxaH/view
-- 💻 **Code Walkthrough:**  https://drive.google.com/file/d/1sUouxUdxTb5uq8DHrY-OzB30UKRam3-x/view?usp=sharing
--  **Report documentation:** https://drive.google.com/file/d/1C7zz40Ic_aDtsTumv_YgyxbE6OoaxFWH/view?usp=sharing
--  
-
-
-
-
-
-## 🛠 Tech Stack
+## Tech Stack
 
 | Layer      | Technology                                        |
 | ---------- | ------------------------------------------------- |
@@ -25,9 +17,19 @@ A full-stack university notes sharing platform built with React, Node.js, Expres
 | Validation | express-validator                                 |
 
 ---
+##  Features
 
-## 📂 Project Structure
-
+- **🔐 Authentication** — Register/login with JWT, protected routes
+- **📤 File Upload** — Drag-and-drop PDF/image upload with progress bar
+- **🔍 Browse & Filter** — Filter by semester, branch, subject + search by subject code
+- **👍 Voting** — Upvote/downvote with toggle/switch logic (one vote per user per note)
+- **📄 Preview** — Inline PDF viewer (iframe) and image preview
+- **🗑 Delete** — Owner-only note deletion with file cleanup
+- **📱 Responsive** — Mobile-first design with collapsible nav
+- **🎨 Modern UI** — TailwindCSS, glassmorphism, gradients, skeleton loaders
+- **⚡ Toast Notifications** — react-hot-toast for all user actions
+- **🛡 Error Handling** — ErrorBoundary, 404 page, graceful API errors
+##  Project Structure
 ```
 UniDocs/
 ├── client/                   # React frontend (Vite)
@@ -112,7 +114,7 @@ The app will be available at **http://localhost:5173**
 
 ---
 
-## 🔑 Environment Variables
+##  Environment Variables 
 
 ### Server (`/server/.env`)
 
@@ -132,7 +134,7 @@ The app will be available at **http://localhost:5173**
 
 ---
 
-## 📡 API Endpoints
+##  API Endpoints
 
 ### Auth
 
@@ -170,21 +172,10 @@ The app will be available at **http://localhost:5173**
 
 ---
 
-## 🎯 Features
-
-- **🔐 Authentication** — Register/login with JWT, protected routes
-- **📤 File Upload** — Drag-and-drop PDF/image upload with progress bar
-- **🔍 Browse & Filter** — Filter by semester, branch, subject + search by subject code
-- **👍 Voting** — Upvote/downvote with toggle/switch logic (one vote per user per note)
-- **📄 Preview** — Inline PDF viewer (iframe) and image preview
-- **🗑 Delete** — Owner-only note deletion with file cleanup
-- **📱 Responsive** — Mobile-first design with collapsible nav
-- **🎨 Modern UI** — TailwindCSS, glassmorphism, gradients, skeleton loaders
-- **⚡ Toast Notifications** — react-hot-toast for all user actions
-- **🛡 Error Handling** — ErrorBoundary, 404 page, graceful API errors
 
 ---
 
 ## 📝 License
-
 MIT
+## Made By :
+Praveen Ramisetti ...
