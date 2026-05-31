@@ -228,7 +228,7 @@ const Layout = ({ children }) => {
                     >
                       {user?.profilePhoto ? (
                         <img
-                          src={user.profilePhoto.startsWith("http") ? user.profilePhoto : `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${user.profilePhoto}`}
+                          src={user.profilePhoto.startsWith("http") ? user.profilePhoto : `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}${user.profilePhoto}`}
                           alt={user?.name}
                           className="w-9 h-9 rounded-full object-cover shadow-sm ring-2 ring-primary-200"
                         />

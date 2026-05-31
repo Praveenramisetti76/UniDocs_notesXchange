@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import logoImg from "../assets/logo.png";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const Login = () => {
   const { login } = useAuth();
@@ -24,7 +24,7 @@ const Login = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post(`${API_URL}/api/auth/login`, formData);
+      const res = await axios.post(`${API_BASE_URL}/api/auth/login`, formData);
       login(res.data.user, res.data.token);
       toast.success("Welcome back!");
       navigate("/");
@@ -38,7 +38,7 @@ const Login = () => {
   const handleGoogleSuccess = async (credential) => {
     setLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/api/auth/google`, {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/google`, {
         token: credential,
       });
       login(response.data.user, response.data.token);

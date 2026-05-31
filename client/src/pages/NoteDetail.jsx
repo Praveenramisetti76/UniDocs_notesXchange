@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const NoteDetail = () => {
   const { id } = useParams();
@@ -24,7 +24,7 @@ const NoteDetail = () => {
     const fetchNote = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_URL}/api/notes/${id}`);
+        const res = await axios.get(`${API_BASE_URL}/api/notes/${id}`);
         setNote(res.data);
       } catch (err) {
         setError("Note not found or failed to load.");
@@ -40,7 +40,7 @@ const NoteDetail = () => {
     const fetchMyVote = async () => {
       if (!isAuthenticated) return;
       try {
-        const res = await axios.get(`${API_URL}/api/notes/${id}/myvote`);
+        const res = await axios.get(`${API_BASE_URL}/api/notes/${id}/myvote`);
         setMyVote(res.data.voteType);
       } catch (err) {
         console.error("Failed to fetch vote status");
@@ -57,7 +57,7 @@ const NoteDetail = () => {
 
     setVoting(true);
     try {
-      const res = await axios.post(`${API_URL}/api/notes/${id}/vote`, { voteType });
+      const res = await axios.post(`${API_BASE_URL}/api/notes/${id}/vote`, { voteType });
       setNote((prev) => ({
         ...prev,
         upvotes: res.data.upvotes,
@@ -82,7 +82,7 @@ const NoteDetail = () => {
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      await axios.delete(`${API_URL}/api/notes/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/notes/${id}`);
       toast.success("Note deleted successfully");
       setTimeout(() => navigate("/"), 800);
     } catch (err) {

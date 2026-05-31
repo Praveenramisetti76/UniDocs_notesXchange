@@ -4,7 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import CampusWatermark from "../components/CampusWatermark";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
 const BRANCHES = ["CSE", "ECE", "MECH", "CIVIL", "EEE"];
 const ACCEPTED_TYPES = ["application/pdf", "image/jpeg", "image/jpg", "image/png"];
@@ -95,7 +95,7 @@ const Upload = () => {
     data.append("file", file);
 
     try {
-      await axios.post(`${API_URL}/api/notes/upload`, data, {
+      await axios.post(`${API_BASE_URL}/api/notes/upload`, data, {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: (progressEvent) => {
           const pct = Math.round((progressEvent.loaded * 100) / progressEvent.total);

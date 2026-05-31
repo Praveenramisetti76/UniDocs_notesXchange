@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -24,14 +24,14 @@ const Profile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get(`${API}/api/profile/me`);
+        const res = await axios.get(`${API_BASE_URL}/api/profile/me`);
         const u = res.data.user;
         setForm({
           name: u.name || "",
           bio: u.bio || "",
           college: u.college || "",
         });
-        setPhotoPreview(u.profilePhoto ? (u.profilePhoto.startsWith("http") ? u.profilePhoto : `${API}${u.profilePhoto}`) : null);
+        setPhotoPreview(u.profilePhoto ? (u.profilePhoto.startsWith("http") ? u.profilePhoto : `${API_BASE_URL}${u.profilePhoto}`) : null);
         updateUser({
           id: u._id,
           name: u.name,
@@ -51,7 +51,7 @@ const Profile = () => {
             college: user.college || "",
           });
           setPhotoPreview(
-            user.profilePhoto ? (user.profilePhoto.startsWith("http") ? user.profilePhoto : `${API}${user.profilePhoto}`) : null
+            user.profilePhoto ? (user.profilePhoto.startsWith("http") ? user.profilePhoto : `${API_BASE_URL}${user.profilePhoto}`) : null
           );
         }
       } finally {
@@ -74,7 +74,7 @@ const Profile = () => {
     }
     setSaving(true);
     try {
-      const res = await axios.put(`${API}/api/profile/me`, form);
+      const res = await axios.put(`${API_BASE_URL}/api/profile/me`, form);
       updateUser(res.data.user);
       toast.success("Profile updated!");
       setEditMode(false);
@@ -109,11 +109,11 @@ const Profile = () => {
     formData.append("photo", file);
 
     try {
-      const res = await axios.put(`${API}/api/profile/photo`, formData, {
+      const res = await axios.put(`${API_BASE_URL}/api/profile/photo`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       const u = res.data.user;
-      setPhotoPreview(u.profilePhoto.startsWith("http") ? u.profilePhoto : `${API}${u.profilePhoto}`);
+      setPhotoPreview(u.profilePhoto.startsWith("http") ? u.profilePhoto : `${API_BASE_URL}${u.profilePhoto}`);
       updateUser(u);
       toast.success("Photo updated!");
     } catch (err) {

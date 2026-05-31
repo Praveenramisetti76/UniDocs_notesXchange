@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
 import NoteCard, { NoteCardSkeleton } from "../components/NoteCard";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -27,7 +27,7 @@ const Dashboard = () => {
     setNotesLoading(true);
     setNotesError("");
     try {
-      const res = await axios.get(`${API_URL}/api/notes/my-uploads`);
+      const res = await axios.get(`${API_BASE_URL}/api/notes/my-uploads`);
       setMyNotes(res.data.notes);
     } catch (err) {
       setNotesError("Failed to load your notes.");
@@ -42,7 +42,7 @@ const Dashboard = () => {
     setVotesLoading(true);
     setVotesError("");
     try {
-      const res = await axios.get(`${API_URL}/api/notes/my-votes`);
+      const res = await axios.get(`${API_BASE_URL}/api/notes/my-votes`);
       setMyVotes(res.data.votes);
     } catch (err) {
       setVotesError("Failed to load your voting history.");
@@ -66,7 +66,7 @@ const Dashboard = () => {
   const handleDelete = async (noteId) => {
     if (!window.confirm("Are you sure you want to delete this note?")) return;
     try {
-      await axios.delete(`${API_URL}/api/notes/${noteId}`);
+      await axios.delete(`${API_BASE_URL}/api/notes/${noteId}`);
       setMyNotes((prev) => prev.filter((n) => n._id !== noteId));
       toast.success("Note deleted successfully");
     } catch (err) {

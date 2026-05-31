@@ -4,7 +4,7 @@ import axios from "axios";
 import NoteCard, { NoteCardSkeleton } from "../components/NoteCard";
 import CampusWatermark from "../components/CampusWatermark";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const SEMESTERS = [1, 2, 3, 4, 5, 6, 7, 8];
 const BRANCHES = ["CSE", "ECE", "MECH", "CIVIL", "EEE"];
@@ -49,7 +49,7 @@ const Home = () => {
         if (subject) params.subject = subject;
         if (search) params.search = search;
 
-        const res = await axios.get(`${API_URL}/api/notes`, { params });
+        const res = await axios.get(`${API_BASE_URL}/api/notes`, { params });
 
         if (append) {
           setNotes((prev) => [...prev, ...res.data.notes]);
