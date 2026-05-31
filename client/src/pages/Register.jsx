@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -65,6 +65,56 @@ const Register = () => {
       setLoading(false);
     }
   };
+
+  const handleGoogleSuccess = async (credential) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(`${API_URL}/api/auth/google`, {
+        token: credential,
+      });
+      login(response.data.user, response.data.token);
+      toast.success("Account created successfully!");
+      navigate("/");
+    } catch (err) {
+      console.error("Google signup error:", err);
+      toast.error("Google signup failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initialize Google Sign-In button
+  const initializeGoogleSignIn = () => {
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: (response) => {
+          handleGoogleSuccess(response.credential);
+        },
+      });
+      const googleButton = document.getElementById("google-signup-button");
+      if (googleButton && !googleButton.hasChildNodes()) {
+        window.google.accounts.id.renderButton(googleButton, {
+          theme: "outline",
+          size: "large",
+          width: "100%",
+        });
+      }
+    }
+  };
+
+  // Use effect to initialize Google button
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = initializeGoogleSignIn;
+    document.head.appendChild(script);
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   const inputClass = (field) =>
     `w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/40 focus:border-primary-300 transition-all ${
@@ -199,6 +249,8 @@ const Register = () => {
               <span className="px-3 bg-white text-gray-400 font-medium">or</span>
             </div>
           </div>
+
+          <div id="google-signup-button" className="w-full mb-6"></div>
 
           <p className="text-center text-sm text-gray-500">
             Already have an account?{" "}
