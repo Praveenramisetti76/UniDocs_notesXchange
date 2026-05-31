@@ -12,7 +12,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   bio: {
     type: String,
@@ -26,6 +25,15 @@ const userSchema = new mongoose.Schema({
   profilePhoto: {
     type: String,
     default: "",
+  },
+  googleId: {
+    type: String,
+    default: null,
+  },
+  authProvider: {
+    type: String,
+    enum: ["local", "google"],
+    default: "local",
   },
   createdAt: {
     type: Date,

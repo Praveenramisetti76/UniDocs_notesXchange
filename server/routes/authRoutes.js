@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { register, login } from "../controllers/authController.js";
+import { register, login, googleAuth } from "../controllers/authController.js";
 
 const router = express.Router();
 
@@ -26,5 +26,9 @@ router.post(
   ],
   login
 );
+
+// @route   POST /api/auth/google
+// @desc    Google OAuth callback
+router.post("/google", googleAuth);
 
 export default router;
