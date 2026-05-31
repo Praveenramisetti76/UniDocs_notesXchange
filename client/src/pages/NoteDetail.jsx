@@ -92,6 +92,31 @@ const NoteDetail = () => {
     }
   };
 
+  const handleDownload = async () => {
+    if (!note) return;
+    
+    const fileName = `${note.title}.${isPdf ? "pdf" : "jpg"}`;
+    try {
+      const response = await fetch(fileUrl);
+      if (!response.ok) throw new Error("Download failed");
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = fileName;
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+      toast.success("Download started");
+    } catch (error) {
+      console.error("Download error:", error);
+      toast.error("Download failed");
+    }
+  };
+
   const isOwner = user && note?.uploadedBy?._id === user.id;
   const isPdf = note?.fileType === "pdf";
   const fileUrl = note
@@ -387,18 +412,16 @@ const NoteDetail = () => {
 
           {/* Action Buttons */}
           <div className="space-y-3">
-            <a
-              href={fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download={`${note.title}.${isPdf ? "pdf" : "jpg"}`}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-200/50 hover:shadow-xl hover:shadow-primary-300/40 transition-all duration-300 hover:-translate-y-0.5"
+            <button
+              onClick={handleDownload}
+              disabled={!note}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-200/50 hover:shadow-xl hover:shadow-primary-300/40 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
               Download
-            </a>
+            </button>
 
             {isOwner && (
               <button

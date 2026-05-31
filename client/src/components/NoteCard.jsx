@@ -12,6 +12,38 @@ const NoteCard = ({ note }) => {
 
   const isPdf = note.fileType === "pdf";
 
+  const handleDownload = async (e) => {
+    e.preventDefault();
+    const fileUrl = note.fileUrl.startsWith("http") ? note.fileUrl : `${API_URL}${note.fileUrl}`;
+    const fileName = `${note.title}.${isPdf ? "pdf" : "jpg"}`;
+
+    try {
+      const response = await fetch(fileUrl);
+      if (!response.ok) throw new Error("Download failed");
+
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = fileName;
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download error:", error);
+      // Fallback to direct download
+      const link = document.createElement("a");
+      link.href = fileUrl;
+      link.download = fileName;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <div className="group relative bg-white/90 backdrop-blur-sm rounded-2xl border border-gray-100/80 shadow-sm hover:shadow-xl hover:shadow-primary-100/40 hover:border-primary-200/60 transition-all duration-300 flex flex-col overflow-hidden hover:-translate-y-1">
       {/* File type banner */}
@@ -104,15 +136,12 @@ const NoteCard = ({ note }) => {
             >
               View
             </Link>
-            <a
-              href={note.fileUrl.startsWith("http") ? note.fileUrl : `${API_URL}${note.fileUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              download={`${note.title}.${isPdf ? "pdf" : "jpg"}`}
+            <button
+              onClick={handleDownload}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-white bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-sm hover:shadow-md transition-all duration-200"
             >
               Download
-            </a>
+            </button>
           </div>
         </div>
       </div>
